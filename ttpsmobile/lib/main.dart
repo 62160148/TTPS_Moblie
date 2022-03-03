@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ttpsmobile/pages/edit.dart';
+import 'package:ttpsmobile/pages/login.dart';
 import 'package:ttpsmobile/pages/request.dart';
 import 'package:ttpsmobile/pages/home.dart';
 
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TTPS Moblie By Team 6',
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }

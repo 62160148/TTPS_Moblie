@@ -24,34 +24,34 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => RequestPage()));
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.green,
-        ),
-        appBar: AppBar(
-          actions: [
-            IconButton(
-                onPressed: () {
-                  setState(() {
-                    getHomePages();
-                  });
-                },
-                icon: Icon(
-                  Icons.refresh,
-                  color: Colors.white,
-                ))
-          ],
-          title: Text('All HomePage',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              )),
-          backgroundColor: Colors.blue[900],
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.push(
+        //         context, MaterialPageRoute(builder: (context) => RequestPage()));
+        //   },
+        //   child: Icon(Icons.add),
+        //   backgroundColor: Colors.green,
+        // ),
+        // appBar: AppBar(
+        //   actions: [
+        //     IconButton(
+        //         onPressed: () {
+        //           setState(() {
+        //             getHomePages();
+        //           });
+        //         },
+        //         icon: Icon(
+        //           Icons.refresh,
+        //           color: Colors.white,
+        //         ))
+        //   ],
+        //   title: Text('All HomePage',
+        //       style: TextStyle(
+        //         fontWeight: FontWeight.bold,
+        //         color: Colors.white,
+        //       )),
+        //   backgroundColor: Colors.blue[900],
+        // ),
         body: HomePageCreate());
   }
 
