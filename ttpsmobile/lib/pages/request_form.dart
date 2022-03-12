@@ -33,7 +33,7 @@ class _RequestFormState extends State<RequestForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("แบบฟอร์มขออนุญาตวางของ"),
+        title: Text("Request Tag"),
       ),
       body: Padding(
           padding: const EdgeInsets.all(20.0),
