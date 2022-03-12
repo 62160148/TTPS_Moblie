@@ -39,10 +39,10 @@ class _FormHomeState extends State<FormHome> {
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.start,
-            //   children: [const Text('Date : '), Date()],
-            // ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [const Text('Date : '), Date()],
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [const Text('Item : '), buildItem()],
@@ -73,12 +73,11 @@ class _FormHomeState extends State<FormHome> {
 
   @override
   Widget Date() {
-    return Scaffold(
-        body: SfDateRangePicker(
+    return SfDateRangePicker(
       view: DateRangePickerView.month,
       selectionMode: DateRangePickerSelectionMode.multiRange,
       controller: _datePickerController,
-    ));
+    );
   }
 
   Widget buildItem() {
