@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TTPS Moblie By Team 6',
-      home: FormHome(),
+      home: LoginPage(),
     );
   }
 }
