@@ -3,7 +3,7 @@ import 'package:ttpsmobile/pages/edit.dart';
 import 'package:ttpsmobile/pages/login.dart';
 import 'package:ttpsmobile/pages/request.dart';
 import 'package:ttpsmobile/pages/home.dart';
-import 'package:ttpsmobile/pages/home_detail.dart';
+import 'package:ttpsmobile/pages/request_form.dart';
 
 void main() {
   runApp(MyApp());

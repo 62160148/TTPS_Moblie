@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
-class FormHome extends StatefulWidget {
+class RequestForm extends StatefulWidget {
   //const FormHome({ Key? key }) : super(key: key);
 
   @override
-  State<FormHome> createState() => _FormHomeState();
+  State<RequestForm> createState() => _RequestFormState();
 }
 
-class _FormHomeState extends State<FormHome> {
+class _RequestFormState extends State<RequestForm> {
   DateRangePickerController _datePickerController = DateRangePickerController();
   TextEditingController item = TextEditingController();
   TextEditingController Reson = TextEditingController();
@@ -35,39 +35,64 @@ class _FormHomeState extends State<FormHome> {
       appBar: AppBar(
         title: Text("แบบฟอร์มขออนุญาตวางของ"),
       ),
-      body: Form(
-        child: Column(
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [const Text('Date : '), Date()],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [const Text('Item : '), buildItem()],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [const Text('Reason : '), buildReason()],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [const Text('Tel No. : '), buildTel()],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [const Text('Supervisor : '), buildSupervisor()],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [const Text('Approve Plant : '), buidApprovePlant()],
-            ),
-            //buildSubmitButton(),
-            // const SizedBox(height: 20),
-          ],
-        ),
-      ),
+      body: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: ListView(
+            children: [
+              Form(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [Text('Date : ')],
+                    ),
+                    Row(
+                      children: [
+                        // Date()
+                        ],
+                    ),
+                    SizedBox(height: 20,),
+                    Row(
+                      children: [Text('Item : ')],
+                    ),
+                    Row(
+                      children: [buildItem()],
+                    ),
+                    SizedBox(height: 20,),
+                    Row(
+                      children: [Text('Reason : ')],
+                    ),
+                    Row(
+                      children: [buildReason()],
+                    ),
+                    SizedBox(height: 20,),
+                    Row(
+                      children: [Text('Tel No. : ')],
+                    ),
+                    Row(
+                      children: [buildTel()],
+                    ),
+                    SizedBox(height: 20,),
+                    Row(
+                      children: [
+                        const Text('Supervisor : '),
+                        buildSupervisor()
+                      ],
+                    ),
+                    SizedBox(height: 20,),
+                    Row(
+                      children: [
+                        const Text('Approve Plant : '),
+                        buidApprovePlant()
+                      ],
+                    ),
+                    //buildSubmitButton(),
+                    // const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            ],
+          )),
     );
   }
 
