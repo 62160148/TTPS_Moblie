@@ -12,12 +12,13 @@ class _LogoutPageState extends State<LogoutPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage(
-            'assets/images/bg_logout.jpg'),
-        fit: BoxFit.cover,
-      )),
+      color: Colors.grey,
+      // decoration: BoxDecoration(
+      //     image: DecorationImage(
+      //   image: AssetImage(
+      //       'assets/images/bg_logout.jpg'),
+      //   fit: BoxFit.cover,
+      // )),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Center(
