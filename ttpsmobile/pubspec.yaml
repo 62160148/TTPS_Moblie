@@ -31,6 +31,7 @@ dependencies:
     sdk: flutter
   http: ^0.13.3
   syncfusion_flutter_datepicker: ^19.4.54
+  datetime_picker_formfield: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -61,8 +62,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - assets/images/bg_logout.jpg
+  assets:
+    - assets/images/bg_logout.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
