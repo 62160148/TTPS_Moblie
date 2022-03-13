@@ -44,10 +44,13 @@ class _RequestFormState extends State<RequestForm> {
         child: ListView(
           children: [
             Column(children: <Widget>[
-              Text('Date : '),
-              SizedBox(height: 20),
+              Image.asset(
+                'assets/images/bg_box1.jpg',
+                width: 200,
+              ),
+              SizedBox(height: 10),
               DateTimeField(
-                cursorWidth: 50,
+                // cursorWidth: 50,
                 format: format,
                 controller: date,
                 decoration: InputDecoration(
@@ -60,32 +63,38 @@ class _RequestFormState extends State<RequestForm> {
                       lastDate: DateTime(2100));
                 },
               ),
-              Row(
-                children: [
-                  Text('Item : '),
-                  SizedBox(
-                    width: 220,
-                    child: CupertinoTextField(controller: item),
-                  )
-                ],
+              SizedBox(
+                height: 15,
               ),
-              Row(
-                children: [
-                  Text('Reason : '),
-                  SizedBox(
-                    width: 220,
-                    child: CupertinoTextField(controller: Reson),
-                  )
-                ],
+              TextField(
+                controller: item,
+                decoration: InputDecoration(
+                  labelText: 'Item',
+                  border: OutlineInputBorder(),
+                ),
               ),
-              Row(
-                children: [
-                  Text('Tel No. : '),
-                  SizedBox(
-                    width: 220,
-                    child: CupertinoTextField(controller: Reson),
-                  )
-                ],
+              SizedBox(
+                height: 15,
+              ),
+              TextField(
+                controller: Reson,
+                decoration: InputDecoration(
+                  labelText: 'Reason',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              TextField(
+                controller: Reson,
+                decoration: InputDecoration(
+                  labelText: 'Tel No',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(
+                height: 15,
               ),
               Row(
                 children: [
@@ -108,6 +117,9 @@ class _RequestFormState extends State<RequestForm> {
                       }).toList())
                 ],
               ),
+              SizedBox(
+                height: 15,
+              ),
               Row(
                 children: [
                   Text('Approve Plant : '),
@@ -129,6 +141,24 @@ class _RequestFormState extends State<RequestForm> {
                             value: value, child: Text(value));
                       }).toList())
                 ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                  child: ElevatedButton(
+                      onPressed: () {
+                        //เคลีบร์ข้อมูลหลังจากโพสต์
+                      },
+                      child: Text("Submit"),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.green),
+                          padding: MaterialStateProperty.all(
+                              EdgeInsets.fromLTRB(50, 10, 50, 10)),
+                          textStyle: MaterialStateProperty.all(
+                              TextStyle(fontSize: 20)
+                          )
+                      )
+                  )
               ),
             ])
             // Form(
