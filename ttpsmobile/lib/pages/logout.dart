@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ttpsmobile/pages/home.dart';
 import 'package:ttpsmobile/pages/login.dart';
 
 class LogoutPage extends StatefulWidget {
@@ -11,6 +12,13 @@ class LogoutPage extends StatefulWidget {
 class _LogoutPageState extends State<LogoutPage> {
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Logout')),
+      body: myCardLogout(),
+      backgroundColor: Colors.grey,
+    );
+  }
+    Widget myCardLogout() {
     return Container(
       color: Colors.grey,
       // decoration: BoxDecoration(
@@ -63,11 +71,11 @@ class _LogoutPageState extends State<LogoutPage> {
                     const SizedBox(width: 8),
                     ElevatedButton(
                       onPressed: () {
-                        // Navigator.pop(context);
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => ),
-                        // );
+                        Navigator.pop(context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
                       },
                       style: ButtonStyle(
                           backgroundColor:

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ttpsmobile/pages/all_request_list.dart';
 import 'package:ttpsmobile/pages/login.dart';
 import 'package:ttpsmobile/pages/logout.dart';
 import 'package:ttpsmobile/pages/add_request_form.dart';
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage>
   late TabController _tabController;
   
   PageController pageController = PageController();
-  List<Widget>pages = [Text('blank'), RequestForm() , LogoutPage()];
+  List<Widget>pages = [RequestListPage(), RequestForm() , LogoutPage()];
 
   int selectIndex = 0;
   
