@@ -1,36 +1,43 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
+
+import 'package:ttpsmobile/pages/home.dart';
 
 class LoginPage extends StatefulWidget {
   // const LoginPage({Key? key}) : super(key: key);
-
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
 
   bool passenable = true; //boolean value to track password view enable disable
+
+  String getUsername() {
+    return username.text;
+  }
 
   @override
   void initState() {
     username.text = "";
     password.text = "";
     super.initState();
-    // getUsername();
   }
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
-        child: Container(
-          decoration: BoxDecoration(
+        body: SizedBox.expand(
+      child: Container(
+        decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage('https://docplayer.info/docs-images/100/143566411/images/1-0.jpg'),
-              fit: BoxFit.cover,
-            )
-          ),
+          image: NetworkImage(
+              'https://docplayer.info/docs-images/100/143566411/images/1-0.jpg'),
+          fit: BoxFit.cover,
+        )),
         child: Padding(
           padding: const EdgeInsets.all(50.0),
           child: ListView(
@@ -74,74 +81,54 @@ class _LoginPageState extends State<LoginPage> {
                                 //if passenable == true, make it false
                                 passenable = false;
                               } else {
-                                passenable = true; //if passenable == false, make it true
+                                passenable =
+                                    true; //if passenable == false, make it true
                               }
                             });
                           },
-                          icon: Icon(passenable == true? Icons.remove_red_eye: Icons.password)
-                      )
-                  )
-              ),
+                          icon: Icon(passenable == true
+                              ? Icons.remove_red_eye
+                              : Icons.password)))),
               SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () {
-                  // if (username.text == 'admin' && password.text == '1234') {
-                  //   print("USERNAME = admin, PASSWORD = 1234");
-                  //   setState(() {
-                  //     username.text = 'admin';
-                  //     password.text = '1234';
-
-                  //     setUsername(username.text);
-                  //     setPassword(password.text);
-                  //     setStatus('Login Success');
-                  //   });
-                  // } else {
-                  //   print("User = Others");
-                  //   setStatus('Login Failed');
-                  // }
+                  if (username.text == "00009" && password.text == "123456") {
+                    setState(() {
+                      username.text = "@Team6";
+                      setUsername(username.text);
+                      setStatus("Success!");
+                    });
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+                  } else {
+                    print("User = Other");
+                    setStatus("Failed!");
+                  }
+                  print("Username = " + username.text);
                 },
                 child: Text("SIGN IN"),
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(
-                        Color.fromARGB(	255, 60, 165, 255)),
+                        Color.fromARGB(255, 60, 165, 255)),
                     padding: MaterialStateProperty.all(
                         EdgeInsets.fromLTRB(50, 20, 50, 20)),
                     textStyle:
                         MaterialStateProperty.all(TextStyle(fontSize: 20))),
               ),
-              // SizedBox(height: 20),
-              // ElevatedButton(
-              //   onPressed: () {
-              //     // Navigator.push(context,
-              //     //     MaterialPageRoute(builder: (context) => ProfilePage()));
-              //   },
-              //   // child: Text("ไปหน้า Profile"),
-              //   // style: ButtonStyle(
-              //   //     backgroundColor: MaterialStateProperty.all(Colors.black87),
-              //   //     padding: MaterialStateProperty.all(
-              //   //         EdgeInsets.fromLTRB(50, 20, 50, 20)),
-              //   //     textStyle:
-              //   //         MaterialStateProperty.all(TextStyle(fontSize: 30))),
-              // ),
             ],
           ),
         ),
       ),
     ));
+  } //widget build
+
+  Future<void> setUsername(textUsername) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('username', textUsername);
   }
+
+  void setStatus(textStatus) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString('status', textStatus);
+  }
+
 }
-
-// Future<void> setUsername(textUsername) async {
-//   final SharedPreferences pref = await SharedPreferences.getInstance();
-//   pref.setString('username', textUsername);
-// }
-
-// Future<void> setPassword(textPassword) async {
-//   final SharedPreferences pref = await SharedPreferences.getInstance();
-//   pref.setString('password', textPassword);
-// }
-
-// Future<void> setStatus(textStatus) async {
-//   final SharedPreferences pref = await SharedPreferences.getInstance();
-//   pref.setString('status', textStatus);
-// }

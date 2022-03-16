@@ -8,12 +8,15 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  late TabController _tabController;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'TTPS Moblie By Team 6',
-      home: HomePage(),
+      home: LoginPage(),
+      // HomePage(),
     );
   }
 }
