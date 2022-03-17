@@ -4,6 +4,10 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
+
 class RequestForm extends StatefulWidget {
   //const FormHome({ Key? key }) : super(key: key);
 
@@ -15,12 +19,14 @@ class _RequestFormState extends State<RequestForm> {
   final format = DateFormat("yyyy-MM-dd");
   DateRangePickerController _datePickerController = DateRangePickerController();
   TextEditingController item = TextEditingController();
-  TextEditingController Reson = TextEditingController();
-  TextEditingController Tel = TextEditingController();
-  TextEditingController date = TextEditingController();
-  String? _getText;
-  String? _getText2;
-  List<String> list = [
+  TextEditingController reason = TextEditingController();
+  TextEditingController tel = TextEditingController();
+  TextEditingController startdate = TextEditingController();
+  TextEditingController enddate = TextEditingController();
+
+  String? _getSuper;
+  String? _getPlant;
+  List<String> listSuper = [
     'Chakrit Boonprasert',
     'Niphat Kuhoksiw ',
     'Ponprapai Atsawanurak ',
@@ -33,11 +39,12 @@ class _RequestFormState extends State<RequestForm> {
     'Pontakon Munjit',
     'Jirayut Saifah'
   ]; //ดึงข้อมูลจาก database มาใส่แทน
-  List<String> list2 = [
+  List<String> listPlant = [
     'Plant 1',
     'Plant 2',
     'All Area'
   ]; //ดึงข้อมูลจาก database มาใส่แทน
+
   @override
   initState() {
     _datePickerController.selectedRanges = <PickerDateRange>[
@@ -68,9 +75,26 @@ class _RequestFormState extends State<RequestForm> {
               DateTimeField(
                 // cursorWidth: 50,
                 format: format,
-                controller: date,
+                controller: startdate,
                 decoration: InputDecoration(
-                    labelText: 'Date', border: OutlineInputBorder()),
+                    labelText: 'Start Date', border: OutlineInputBorder()),
+                onShowPicker: (context, currentValue) {
+                  return showDatePicker(
+                      context: context,
+                      firstDate: DateTime(1900),
+                      initialDate: currentValue ?? DateTime.now(),
+                      lastDate: DateTime(2100));
+                },
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              DateTimeField(
+                // cursorWidth: 50,
+                format: format,
+                controller: enddate,
+                decoration: InputDecoration(
+                    labelText: 'End Date', border: OutlineInputBorder()),
                 onShowPicker: (context, currentValue) {
                   return showDatePicker(
                       context: context,
@@ -93,7 +117,7 @@ class _RequestFormState extends State<RequestForm> {
                 height: 15,
               ),
               TextField(
-                controller: Reson,
+                controller: reason,
                 decoration: InputDecoration(
                   labelText: 'Reason',
                   border: OutlineInputBorder(),
@@ -103,7 +127,7 @@ class _RequestFormState extends State<RequestForm> {
                 height: 15,
               ),
               TextField(
-                controller: Reson,
+                controller: tel,
                 decoration: InputDecoration(
                   labelText: 'Tel No',
                   border: OutlineInputBorder(),
@@ -117,17 +141,17 @@ class _RequestFormState extends State<RequestForm> {
                   Text('Supervisor : '),
                   DropdownButton<String>(
                       hint: const Text(''),
-                      value: _getText,
+                      value: _getSuper,
                       elevation: 16,
                       style: const TextStyle(color: Colors.deepPurple),
                       underline:
                           Container(height: 2, color: Colors.deepPurpleAccent),
                       onChanged: (String? newValue) {
                         setState(() {
-                          _getText = newValue!;
+                          _getSuper = newValue!;
                         });
                       },
-                      items: list.map<DropdownMenuItem<String>>((String value) {
+                      items: listSuper.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                             value: value, child: Text(value));
                       }).toList())
@@ -141,18 +165,18 @@ class _RequestFormState extends State<RequestForm> {
                   Text('Approve Plant : '),
                   DropdownButton<String>(
                       hint: const Text(''),
-                      value: _getText2,
+                      value: _getPlant,
                       elevation: 16,
                       style: const TextStyle(color: Colors.deepPurple),
                       underline:
                           Container(height: 2, color: Colors.deepPurpleAccent),
                       onChanged: (String? newValue) {
                         setState(() {
-                          _getText2 = newValue!;
+                          _getPlant = newValue!;
                         });
                       },
                       items:
-                          list2.map<DropdownMenuItem<String>>((String value) {
+                          listPlant.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                             value: value, child: Text(value));
                       }).toList())
@@ -162,7 +186,26 @@ class _RequestFormState extends State<RequestForm> {
                   padding: const EdgeInsets.all(20),
                   child: ElevatedButton(
                       onPressed: () {
-                        //เคลีบร์ข้อมูลหลังจากโพสต์
+
+                        print('----- input -----');
+                        print('start date: ${startdate.text}');
+                        print('end date: ${enddate.text}');
+                        print('item: ${item.text}');
+                        print('reason: ${reason.text}');
+                        print('tel: ${tel.text}');
+                        print('tel: ${_getSuper}');
+                        print('tel: ${_getPlant}');
+
+                        postList();
+
+                        setState(() {
+                          //เคลีบร์ข้อมูลหลังจากโพสต์
+                          startdate.clear(); 
+                          enddate.clear();
+                          item.clear(); 
+                          reason.clear();
+                          tel.clear();
+                        });
                       },
                       child: Text("Submit"),
                       style: ButtonStyle(
@@ -173,212 +216,23 @@ class _RequestFormState extends State<RequestForm> {
                           textStyle: MaterialStateProperty.all(
                               TextStyle(fontSize: 20))))),
             ])
-            // Form(
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.start,
-            //     children: [
-            //       Row(
-            //         children: [Text('Date : ')],
-            //       ),
-            //       Row(
-            //         children: <Widget>[Date()],
-            //       ),
-            //       SizedBox(
-            //         height: 20,
-            //       ),
-            //       Row(
-            //         children: [Text('Item : ')],
-            //       ),
-            //       Row(
-            //         children: [buildItem()],
-            //       ),
-            //       SizedBox(
-            //         height: 20,
-            //       ),
-            //       Row(
-            //         children: [Text('Reason : ')],
-            //       ),
-            //       Row(
-            //         children: [buildReason()],
-            //       ),
-            //       SizedBox(
-            //         height: 20,
-            //       ),
-            //       Row(
-            //         children: [Text('Tel No. : ')],
-            //       ),
-            //       Row(
-            //         children: [buildTel()],
-            //       ),
-            //       SizedBox(
-            //         height: 20,
-            //       ),
-            //       Row(
-            //         children: [
-            //           const Text('Supervisor : '),
-            //           buildSupervisor()
-            //         ],
-            //       ),
-            //       SizedBox(
-            //         height: 20,
-            //       ),
-            //       Row(
-            //         children: [
-            //           const Text('Approve Plant : '),
-            //           buidApprovePlant()
-            //         ],
-            //       ),
-            //       //buildSubmitButton(),
-            //       // const SizedBox(height: 20),
-            //     ],
-            //   ),
-            // ),
           ],
         ),
       ),
     );
   }
 
-  //@override
-  // Widget Date() {
-  //   return SfDateRangePicker(
-  //     view: DateRangePickerView.month,
-  //     selectionMode: DateRangePickerSelectionMode.multiRange,
-  //     controller: _datePickerController,
-  //   );
-  // }
-  // Widget Date() {
-  //   return Column(children: <Widget>[
-  //     DateTimeField(
-  //       format: format,
-  //       controller: date,
-  //       decoration:
-  //           InputDecoration(labelText: 'Date', border: OutlineInputBorder()),
-  //       onShowPicker: (context, currentValue) {
-  //         return showDatePicker(
-  //             context: context,
-  //             firstDate: DateTime(1900),
-  //             initialDate: currentValue ?? DateTime.now(),
-  //             lastDate: DateTime(2100));
-  //       },
-  //     ),
-  //     Row(
-  //       children: [
-  //         SizedBox(
-  //           width: 220,
-  //           child: CupertinoTextField(controller: item),
-  //         )
-  //       ],
-  //     ),
-  //     Row(
-  //       children: [
-  //         SizedBox(
-  //           width: 220,
-  //           child: CupertinoTextField(controller: Reson),
-  //         )
-  //       ],
-  //     ),
-  //     Row(
-  //       children: [
-  //         SizedBox(
-  //           width: 220,
-  //           child: CupertinoTextField(controller: Reson),
-  //         )
-  //       ],
-  //     ),
-  //     Row(
-  //       children: [
-  //         DropdownButton<String>(
-  //             hint: const Text(''),
-  //             value: _getText,
-  //             elevation: 16,
-  //             style: const TextStyle(color: Colors.deepPurple),
-  //             underline: Container(height: 2, color: Colors.deepPurpleAccent),
-  //             onChanged: (String? newValue) {
-  //               setState(() {
-  //                 _getText = newValue!;
-  //               });
-  //             },
-  //             items: list.map<DropdownMenuItem<String>>((String value) {
-  //               return DropdownMenuItem<String>(
-  //                   value: value, child: Text(value));
-  //             }).toList())
-  //       ],
-  //     ),
-  //     Row(
-  //       children: [
-  //         DropdownButton<String>(
-  //             hint: const Text(''),
-  //             value: _getText2,
-  //             elevation: 16,
-  //             style: const TextStyle(color: Colors.deepPurple),
-  //             underline: Container(height: 2, color: Colors.deepPurpleAccent),
-  //             onChanged: (String? newValue) {
-  //               setState(() {
-  //                 _getText2 = newValue!;
-  //               });
-  //             },
-  //             items: list2.map<DropdownMenuItem<String>>((String value) {
-  //               return DropdownMenuItem<String>(
-  //                   value: value, child: Text(value));
-  //             }).toList())
-  //       ],
-  //     ),
-  //   ]);
-  // }
+  Future postList() async {
+    var url = Uri.http('10.0.2.2:8000', '/api-team6/post-requestlist/');
+    // header ของ POST request ประเภทของ json ที่เราจะส่งไปแบบ json
+    Map<String, String> header = {"Content-type": "application/json"};
+    // Data ที่จะส่ง
+    String jsondata =
+        '{"start date":"${startdate.text}", "end date":"${enddate.text}", "item":"${item.text}"}, "reason":"${reason.text}"}, "tel":"${tel.text}"}, "supervisor":"${_getSuper}"}, "approveplant":"${_getPlant}"}';
+    // เป็นการ response ค่าจาก POST
+    var response = await http.post(url, headers: header, body: jsondata);
+    print("--------- result --------");
+    print(response.body);
+  }
 
-  // Widget buildItem() {
-  //   return SizedBox(
-  //     width: 220,
-  //     child: CupertinoTextField(controller: item),
-  //   );
-  // }
-
-  // Widget buildReason() {
-  //   return SizedBox(
-  //     width: 220,
-  //     child: CupertinoTextField(controller: Reson),
-  //   );
-  // }
-
-  // Widget buildTel() {
-  //   return SizedBox(
-  //     width: 220,
-  //     child: CupertinoTextField(controller: Tel),
-  //   );
-  // }
-
-  // Widget buildSupervisor() {
-  //   return DropdownButton<String>(
-  //       hint: const Text(''),
-  //       value: _getText,
-  //       elevation: 16,
-  //       style: const TextStyle(color: Colors.deepPurple),
-  //       underline: Container(height: 2, color: Colors.deepPurpleAccent),
-  //       onChanged: (String? newValue) {
-  //         setState(() {
-  //           _getText = newValue!;
-  //         });
-  //       },
-  //       items: list.map<DropdownMenuItem<String>>((String value) {
-  //         return DropdownMenuItem<String>(value: value, child: Text(value));
-  //       }).toList()); //ดึงข้อมูลจากฐานข้อมูลมาใส่แทน
-  // }
-
-  // Widget buidApprovePlant() {
-  //   return DropdownButton<String>(
-  //       hint: const Text(''),
-  //       value: _getText2,
-  //       elevation: 16,
-  //       style: const TextStyle(color: Colors.deepPurple),
-  //       underline: Container(height: 2, color: Colors.deepPurpleAccent),
-  //       onChanged: (String? newValue) {
-  //         setState(() {
-  //           _getText2 = newValue!;
-  //         });
-  //       },
-  //       items: list2.map<DropdownMenuItem<String>>((String value) {
-  //         return DropdownMenuItem<String>(value: value, child: Text(value));
-  //       }).toList()); //ดึงข้อมูลจากฐานข้อมูลมาใส่แทน
-//}
 }

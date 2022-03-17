@@ -10,6 +10,9 @@ class LogoutPage extends StatefulWidget {
 }
 
 class _LogoutPageState extends State<LogoutPage> {
+
+  late TabController _tabController;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +42,7 @@ class _LogoutPageState extends State<LogoutPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       new Container(
-                          child: new Image.network(
+                        child: new Image.network(
                         'https://st4.depositphotos.com/16602560/29586/v/600/depositphotos_295863898-stock-illustration-vector-yellow-hazard-warning-symbol.jpg',
                         height: 150,
                         width: 150,
