@@ -20,8 +20,24 @@ class _RequestFormState extends State<RequestForm> {
   TextEditingController date = TextEditingController();
   String? _getText;
   String? _getText2;
-  List<String> list = ['1', '2']; //ดึงข้อมูลจาก database มาใส่แทน
-  List<String> list2 = ['3', '4']; //ดึงข้อมูลจาก database มาใส่แทน
+  List<String> list = [
+    'Chakrit Boonprasert',
+    'Niphat Kuhoksiw ',
+    'Ponprapai Atsawanurak ',
+    'Apinya Phadungkit',
+    'Thitima Popila',
+    'Phatchara Khongthandee',
+    'Natthanic Ploempool',
+    'Nattakorn Noikerd',
+    'Jaraspon Seallo',
+    'Pontakon Munjit',
+    'Jirayut Saifah'
+  ]; //ดึงข้อมูลจาก database มาใส่แทน
+  List<String> list2 = [
+    'Plant 1',
+    'Plant 2',
+    'All Area'
+  ]; //ดึงข้อมูลจาก database มาใส่แทน
   @override
   initState() {
     _datePickerController.selectedRanges = <PickerDateRange>[
@@ -143,7 +159,7 @@ class _RequestFormState extends State<RequestForm> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: ElevatedButton(
                       onPressed: () {
                         //เคลีบร์ข้อมูลหลังจากโพสต์
@@ -155,11 +171,7 @@ class _RequestFormState extends State<RequestForm> {
                           padding: MaterialStateProperty.all(
                               EdgeInsets.fromLTRB(50, 10, 50, 10)),
                           textStyle: MaterialStateProperty.all(
-                              TextStyle(fontSize: 20)
-                          )
-                      )
-                  )
-              ),
+                              TextStyle(fontSize: 20))))),
             ])
             // Form(
             //   child: Column(
