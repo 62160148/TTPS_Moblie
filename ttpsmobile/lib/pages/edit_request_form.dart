@@ -38,7 +38,7 @@ class _EditFormState extends State<EditForm> {
 
   String? _getSuper;
   String? _getPlant;
-  List<String> listSuper = [
+  List<String> supervisor = [
     'Chakrit Boonprasert',
     'Niphat Kuhoksiw ',
     'Ponprapai Atsawanurak ',
@@ -51,7 +51,7 @@ class _EditFormState extends State<EditForm> {
     'Pontakon Munjit',
     'Jirayut Saifah'
   ]; //ดึงข้อมูลจาก database มาใส่แทน
-  List<String> listPlant = [
+  List<String> approveplant = [
     'Plant 1',
     'Plant 2',
     'All Area'
@@ -191,7 +191,7 @@ class _EditFormState extends State<EditForm> {
                           _getSuper = newValue!;
                         });
                       },
-                      items: listSuper.map<DropdownMenuItem<String>>((String value) {
+                      items: supervisor.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                             value: value, child: Text(value));
                       }).toList())
@@ -216,7 +216,7 @@ class _EditFormState extends State<EditForm> {
                         });
                       },
                       items:
-                          listPlant.map<DropdownMenuItem<String>>((String value) {
+                          approveplant.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                             value: value, child: Text(value));
                       }).toList())
@@ -243,6 +243,8 @@ class _EditFormState extends State<EditForm> {
                           item.clear();
                           reason.clear();
                           tel.clear();
+                          supervisor.clear();
+                          approveplant.clear();
                         });
                       },
                       child: Text("Save"),
@@ -265,7 +267,7 @@ class _EditFormState extends State<EditForm> {
   }
 
     Future putList() async {
-    var url = Uri.http('10.0.2.2:8000', '/api-team6/update-requestlist/$_v1');
+    var url = Uri.http('localhost:8000', '/api-team6/update-requestlist/$_v1');
     Map<String, String> header = {"Content-type": "application/json"};
     // Data ที่จะส่ง
     String jsondata =
@@ -278,7 +280,7 @@ class _EditFormState extends State<EditForm> {
   // End future putTodo
 
   Future deleteList() async {
-    var url = Uri.http('10.0.2.2:8000', '/api-team6/delete-requestlist/$_v1');
+    var url = Uri.http('localhost:8000', '/api-team6/delete-requestlist/$_v1');
     Map<String, String> header = {"Content-type": "application/json"};
     // เป็นการ response ค่าจาก Delete
     var response = await http.delete(url, headers: header);

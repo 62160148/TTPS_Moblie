@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ttpsmobile/pages/all_request_list.dart';
 import 'package:ttpsmobile/pages/login.dart';
-import 'package:ttpsmobile/pages/home.dart';
-import 'package:ttpsmobile/pages/add_request_form.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +15,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'TTPS Moblie By Team 6',
       home: LoginPage(),
-      // HomePage(),
     );
   }
 }

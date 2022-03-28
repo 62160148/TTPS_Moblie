@@ -26,7 +26,7 @@ class _RequestFormState extends State<RequestForm> {
 
   String? _getSuper;
   String? _getPlant;
-  List<String> listSuper = [
+  List<String> supervisor = [
     'Chakrit Boonprasert',
     'Niphat Kuhoksiw ',
     'Ponprapai Atsawanurak ',
@@ -39,7 +39,7 @@ class _RequestFormState extends State<RequestForm> {
     'Pontakon Munjit',
     'Jirayut Saifah'
   ]; //ดึงข้อมูลจาก database มาใส่แทน
-  List<String> listPlant = [
+  List<String> approveplant = [
     'Plant 1',
     'Plant 2',
     'All Area'
@@ -151,7 +151,7 @@ class _RequestFormState extends State<RequestForm> {
                           _getSuper = newValue!;
                         });
                       },
-                      items: listSuper.map<DropdownMenuItem<String>>((String value) {
+                      items: supervisor.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                             value: value, child: Text(value));
                       }).toList())
@@ -176,7 +176,7 @@ class _RequestFormState extends State<RequestForm> {
                         });
                       },
                       items:
-                          listPlant.map<DropdownMenuItem<String>>((String value) {
+                          approveplant.map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                             value: value, child: Text(value));
                       }).toList())
@@ -193,8 +193,8 @@ class _RequestFormState extends State<RequestForm> {
                         print('item: ${item.text}');
                         print('reason: ${reason.text}');
                         print('tel: ${tel.text}');
-                        print('tel: ${_getSuper}');
-                        print('tel: ${_getPlant}');
+                        print('supervisor: ${_getSuper}');
+                        print('approveplant: ${_getPlant}');
 
                         postList();
 
@@ -205,6 +205,8 @@ class _RequestFormState extends State<RequestForm> {
                           item.clear(); 
                           reason.clear();
                           tel.clear();
+                          supervisor.clear();
+                          approveplant.clear();
                         });
                       },
                       child: Text("Submit"),
@@ -223,13 +225,10 @@ class _RequestFormState extends State<RequestForm> {
   }
 
   Future postList() async {
-    var url = Uri.http('10.0.2.2:8000', '/api-team6/post-requestlist/');
-    // header ของ POST request ประเภทของ json ที่เราจะส่งไปแบบ json
+    var url = Uri.http('localhost:8000', '/api-team6/post-requestlist/');
     Map<String, String> header = {"Content-type": "application/json"};
-    // Data ที่จะส่ง
     String jsondata =
         '{"start date":"${startdate.text}", "end date":"${enddate.text}", "item":"${item.text}"}, "reason":"${reason.text}"}, "tel":"${tel.text}"}, "supervisor":"${_getSuper}"}, "approveplant":"${_getPlant}"}';
-    // เป็นการ response ค่าจาก POST
     var response = await http.post(url, headers: header, body: jsondata);
     print("--------- result --------");
     print(response.body);

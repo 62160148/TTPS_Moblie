@@ -29,7 +29,9 @@ class _HomePageState extends State<HomePage>
   }
 
   PageController pageController = PageController();
-  List<Widget> pages = [RequestListPage(), RequestForm(), LogoutPage()];
+  // List<Widget> pages = [RequestListPage(), RequestForm(), LogoutPage()];
+  List<Widget> pages = [RequestListPage()];
+
 
   int selectIndex = 0;
 
