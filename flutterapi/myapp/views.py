@@ -27,7 +27,7 @@ def post_requestlist(request):
 # Update Data
 @api_view(['PUT'])
 def update_requestlist(request, TID):
-    todo = Itemlist.objects.get(id = TID)
+    todo = TemporaryTagPermission.objects.get(id = TID)
 
     if request.method == 'PUT':
         data = {}
@@ -41,7 +41,7 @@ def update_requestlist(request, TID):
 # Delete Data
 @api_view(['DELETE'])
 def delete_requestlist(request,TID):
-    todo = Itemlist.objects.get(id=TID)
+    todo = TemporaryTagPermission.objects.get(id=TID)
 
     if request.method == 'DELETE':
         delete = todo.delete()
