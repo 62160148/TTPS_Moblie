@@ -9,7 +9,7 @@ import 'dart:async';
 import 'dart:convert';
 
 class RequestForm extends StatefulWidget {
-  //const FormHome({ Key? key }) : super(key: key);
+  const RequestForm({ Key? key }) : super(key: key);
 
   @override
   State<RequestForm> createState() => _RequestFormState();
@@ -38,12 +38,12 @@ class _RequestFormState extends State<RequestForm> {
     'Jaraspon Seallo',
     'Pontakon Munjit',
     'Jirayut Saifah'
-  ]; //ดึงข้อมูลจาก database มาใส่แทน
+  ]; 
   List<String> approveplant = [
     'Plant 1',
     'Plant 2',
     'All Area'
-  ]; //ดึงข้อมูลจาก database มาใส่แทน
+  ]; 
 
   @override
   initState() {
@@ -225,10 +225,10 @@ class _RequestFormState extends State<RequestForm> {
   }
 
   Future postList() async {
-    var url = Uri.http('localhost:8000', '/api-team6/post-requestlist/');
+    var url = Uri.http('10.0.2.2:8000', '/api-team6/post-requestlist/');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
-        '{"start date":"${startdate.text}", "end date":"${enddate.text}", "item":"${item.text}"}, "reason":"${reason.text}"}, "tel":"${tel.text}"}, "supervisor":"${_getSuper}"}, "approveplant":"${_getPlant}"}';
+        '{"startdate":"${startdate.text}", "enddate":"${enddate.text}", "item":"${item.text}"}, "reason":"${reason.text}"}, "tel":"${tel.text}"}, "supervisor":"${_getSuper}"}, "approveplant":"${_getPlant}"}';
     var response = await http.post(url, headers: header, body: jsondata);
     print("--------- result --------");
     print(response.body);

@@ -94,7 +94,8 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   if (username.text == "00009" && password.text == "123456") {
                     setState(() {
-                      username.text = "@Team6";
+                      // username.text = "@Team6";
+                      print("User = Employee");
                       setUsername(username.text);
                       setStatus("Success!");
                     });
