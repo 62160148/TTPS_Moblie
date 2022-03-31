@@ -228,7 +228,7 @@ class _RequestFormState extends State<RequestForm> {
     var url = Uri.http('10.0.2.2:8000', '/api-team6/post-requestlist/');
     Map<String, String> header = {"Content-type": "application/json"};
     String jsondata =
-        '{"startdate":"${startdate.text}", "enddate":"${enddate.text}", "item":"${item.text}"}, "reason":"${reason.text}"}, "tel":"${tel.text}"}, "supervisor":"${_getSuper}"}, "approveplant":"${_getPlant}"}';
+        '{"startdate":"${startdate.text}", "enddate":"${enddate.text}", "item":"${item.text}", "reason":"${reason.text}", "tel":"${tel.text}", "supervisor":"${_getSuper}", "approveplant":"${_getPlant}"}';
     var response = await http.post(url, headers: header, body: jsondata);
     print("--------- result --------");
     print(response.body);

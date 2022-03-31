@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
-
-// for edit (http method package)
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
@@ -14,8 +12,7 @@ class EditForm extends StatefulWidget {
 
   // declear variable
   final v_id, v_sdate, v_edate, v_item, v_reason, v_tel, v_super, v_plant;
-  const EditForm(this.v_id, this.v_sdate, this.v_edate, this.v_item,
-      this.v_reason, this.v_tel, this.v_super, this.v_plant);
+  const EditForm(this.v_id, this.v_sdate, this.v_edate, this.v_item, this.v_reason, this.v_tel, this.v_super, this.v_plant);
 
   @override
   _EditFormState createState() => _EditFormState();
@@ -64,9 +61,7 @@ class _EditFormState extends State<EditForm> {
           DateTime.now().add(Duration(days: 16)))
     ];
 
-    void initState() {
       super.initState();
-
       // กำหนดค่าตัวแปร
       _v1 = widget.v_id;
       _v2 = widget.v_sdate;
@@ -85,7 +80,9 @@ class _EditFormState extends State<EditForm> {
       tel.text = widget.v_tel;
       _getSuper = widget.v_super;
       _getPlant = widget.v_plant;
-    }
+      print(startdate.text);
+    
+
   }
 
   @override
@@ -274,7 +271,7 @@ class _EditFormState extends State<EditForm> {
     Map<String, String> header = {"Content-type": "application/json"};
     // Data ที่จะส่ง
     String jsondata =
-        '{"startdate":"${startdate.text}", "enddate":"${enddate.text}", "item":"${item.text}"}, "reason":"${reason.text}"}, "tel":"${tel.text}"}, "supervisor":"${_getSuper}"}, "approveplant":"${_getPlant}"}';
+        '{"startdate":"${startdate.text}", "enddate":"${enddate.text}", "item":"${item.text}", "reason":"${reason.text}", "tel":"${tel.text}", "supervisor":"${_getSuper}", "approveplant":"${_getPlant}"}';
     // เป็นการ response ค่าจาก PUT
     var response = await http.put(url, headers: header, body: jsondata);
     print("--------- result --------");
