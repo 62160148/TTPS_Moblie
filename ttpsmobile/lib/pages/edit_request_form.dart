@@ -79,9 +79,7 @@ class _EditFormState extends State<EditForm> {
       reason.text = widget.v_reason;
       tel.text = widget.v_tel;
       _getSuper = widget.v_super;
-      _getPlant = widget.v_plant;
-      print(startdate.text);
-    
+      _getPlant = widget.v_plant;   
 
   }
 
