@@ -7,12 +7,15 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:ttpsmobile/pages/home.dart';
+
 class EditForm extends StatefulWidget {
   // const EditForm({ Key? key }) : super(key: key);
 
   // declear variable
   final v_id, v_sdate, v_edate, v_item, v_reason, v_tel, v_super, v_plant;
-  const EditForm(this.v_id, this.v_sdate, this.v_edate, this.v_item, this.v_reason, this.v_tel, this.v_super, this.v_plant);
+  const EditForm(this.v_id, this.v_sdate, this.v_edate, this.v_item,
+      this.v_reason, this.v_tel, this.v_super, this.v_plant);
 
   @override
   _EditFormState createState() => _EditFormState();
@@ -61,45 +64,122 @@ class _EditFormState extends State<EditForm> {
           DateTime.now().add(Duration(days: 16)))
     ];
 
-      super.initState();
-      // กำหนดค่าตัวแปร
-      _v1 = widget.v_id;
-      _v2 = widget.v_sdate;
-      _v3 = widget.v_edate;
-      _v4 = widget.v_item;
-      _v5 = widget.v_reason;
-      _v6 = widget.v_tel;
-      _v7 = widget.v_super;
-      _v8 = widget.v_plant;
+    super.initState();
+    // กำหนดค่าตัวแปร
+    _v1 = widget.v_id;
+    _v2 = widget.v_sdate;
+    _v3 = widget.v_edate;
+    _v4 = widget.v_item;
+    _v5 = widget.v_reason;
+    _v6 = widget.v_tel;
+    _v7 = widget.v_super;
+    _v8 = widget.v_plant;
 
-      // ข้อมูลที่สามารถแก้ไขได้
-      startdate.text = widget.v_sdate;
-      enddate.text = widget.v_edate;
-      item.text = widget.v_item;
-      reason.text = widget.v_reason;
-      tel.text = widget.v_tel;
-      _getSuper = widget.v_super;
-      _getPlant = widget.v_plant;   
-
+    // ข้อมูลที่สามารถแก้ไขได้
+    startdate.text = widget.v_sdate;
+    enddate.text = widget.v_edate;
+    item.text = widget.v_item;
+    reason.text = widget.v_reason;
+    tel.text = widget.v_tel;
+    _getSuper = widget.v_super;
+    _getPlant = widget.v_plant;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit Tag Form"),
-        // ปุ่มลบ
-        actions: [
-          IconButton(
-              onPressed: () {
-                print("Delete ID:$_v1");
-                deleteList().then((value) {
-                  Navigator.pop(context);
-                });
-              },
-              icon: Icon(Icons.delete_forever_outlined))
-        ],
-      ),
+      appBar: AppBar(title: Text("Edit Tag Form"), actions: [
+        IconButton(
+            onPressed: () {
+              // Modal Confirm Delete
+              showModalBottomSheet<void>(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Container(
+                      height: 200,
+                      color: Colors.white,
+                      // color: Colors.amber[200],
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Container(
+                                    child: new Image.network(
+                                      'https://icon-library.com/images/delete-icon-png/delete-icon-png-19.jpg',
+                                      height: 50,
+                                      width: 100,
+                                    ),
+                                  ),
+                                ]),
+                            SizedBox(height: 5),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    'Are you sure you want to delete?',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 20),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ]),
+                            SizedBox(height: 10),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                // ปุ่มยืนยันการลบ
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.green)),
+                                  child: const Text('Yes'),
+                                  onPressed: () {
+                                    print("Delete ID:$_v1");
+                                    deleteList().then((value) {
+                                      Navigator.pop(context);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => HomePage())
+                                      );
+                                    });
+                                  },
+                                ),
+                                const SizedBox(width: 10),
+                                // ปุ่มยกเลิกการลบ
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              Colors.red)),
+                                  child: const Text('No'),
+                                  onPressed: () => Navigator.pop(context),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+            },
+            icon: Icon(Icons.delete_forever_outlined))
+      ]
+          // ปุ่มลบ
+          // actions: [
+          //   IconButton(
+          //       onPressed: () {
+          //         print("Delete ID:$_v1");
+          //         deleteList().then((value) {
+          //           Navigator.pop(context);
+          //         });
+          //       },
+          //       icon: Icon(Icons.delete_forever_outlined))
+          // ],
+          ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: ListView(
@@ -286,4 +366,52 @@ class _EditFormState extends State<EditForm> {
     print(response.body);
   }
   // End future postTodo
+
+  // Modal
+  // Future<T?> showModalBottomSheet<T>({
+  //   required BuildContext context,
+  //   required WidgetBuilder builder,
+  //   Color? backgroundColor,
+  //   double? elevation,
+  //   ShapeBorder? shape,
+  //   Clip? clipBehavior,
+  //   BoxConstraints? constraints,
+  //   Color? barrierColor,
+  //   bool isScrollControlled = false,
+  //   bool useRootNavigator = false,
+  //   bool isDismissible = true,
+  //   bool enableDrag = true,
+  //   RouteSettings? routeSettings,
+  //   AnimationController? transitionAnimationController,
+  // }) {
+  //   assert(context != null);
+  //   assert(builder != null);
+  //   assert(isScrollControlled != null);
+  //   assert(useRootNavigator != null);
+  //   assert(isDismissible != null);
+  //   assert(enableDrag != null);
+  //   assert(debugCheckHasMediaQuery(context));
+  //   assert(debugCheckHasMaterialLocalizations(context));
+
+  //   final NavigatorState navigator =
+  //       Navigator.of(context, rootNavigator: useRootNavigator);
+  //   return navigator.push(_ModalBottomSheetRoute<T>(
+  //     builder: builder,
+  //     capturedThemes:
+  //         InheritedTheme.capture(from: context, to: navigator.context),
+  //     isScrollControlled: isScrollControlled,
+  //     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+  //     backgroundColor: backgroundColor,
+  //     elevation: elevation,
+  //     shape: shape,
+  //     clipBehavior: clipBehavior,
+  //     constraints: constraints,
+  //     isDismissible: isDismissible,
+  //     modalBarrierColor: barrierColor,
+  //     enableDrag: enableDrag,
+  //     settings: routeSettings,
+  //     transitionAnimationController: transitionAnimationController,
+  //   ));
+  // }
+
 }
